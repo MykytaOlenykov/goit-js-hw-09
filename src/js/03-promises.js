@@ -6,3 +6,13 @@ function createPromise(position, delay) {
     // Reject
   }
 }
+
+const formRef = document.querySelector('.form');
+
+formRef.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const {
+    elements: { delay, step, amount },
+  } = e.currentTarget;
+});
