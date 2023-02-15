@@ -1,5 +1,32 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+const formRef = document.querySelector('.form');
+const btnEl = formRef.querySelector('button[type="submit"]');
+
+formRef.addEventListener('submit', e => {
+  e.preventDefault();
+  btnEl.setAttribute('disabled', '');
+
+  const {
+    elements: { delay, step, amount },
+  } = e.currentTarget;
+
+  let currentDelay = Number(delay.value);
+
+  for (let i = 1; i <= amount.value; i += 1) {
+    createPromise(i, currentDelay)
+      .then(value => Notify.success(value))
+      .catch(error => Notify.failure(error))
+      .finally(() => {
+        if (Number(amount.value) === i) {
+          btnEl.removeAttribute('disabled');
+        }
+      });
+
+    currentDelay += Number(step.value);
+  }
+});
+
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
@@ -13,23 +40,3 @@ function createPromise(position, delay) {
     }, delay);
   });
 }
-
-const formRef = document.querySelector('.form');
-
-formRef.addEventListener('submit', e => {
-  e.preventDefault();
-
-  const {
-    elements: { delay, step, amount },
-  } = e.currentTarget;
-
-  let currentDelay = Number(delay.value);
-
-  for (let i = 1; i <= amount.value; i += 1) {
-    createPromise(i, currentDelay)
-      .then(value => Notify.success(value))
-      .catch(error => Notify.failure(error));
-
-    currentDelay += Number(step.value);
-  }
-});
