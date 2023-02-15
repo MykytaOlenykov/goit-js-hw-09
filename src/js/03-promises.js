@@ -11,9 +11,13 @@ formRef.addEventListener('submit', e => {
     elements: { delay, step, amount },
   } = e.currentTarget;
 
-  formValidation(Number(delay.value), Number(step.value), Number(amount.value));
-
-  if (Number(amount.value) <= 0) {
+  if (
+    formValidation(
+      Number(delay.value),
+      Number(step.value),
+      Number(amount.value)
+    )
+  ) {
     btnEl.removeAttribute('disabled');
 
     return;
@@ -38,11 +42,15 @@ formRef.addEventListener('submit', e => {
 function formValidation(delay, step, amount) {
   if (delay < 0 || step < 0 || amount < 0) {
     Notify.failure('Negative numbers are invalid.');
+    return true;
   }
 
   if (!amount) {
     Notify.failure('Create at least one promise.');
+    return true;
   }
+
+  return false;
 }
 
 function createPromise(position, delay) {
