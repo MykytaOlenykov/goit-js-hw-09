@@ -13,7 +13,7 @@ formRef.addEventListener('submit', e => {
 
   formValidation(Number(delay.value), Number(step.value), Number(amount.value));
 
-  if (!Number(amount.value)) {
+  if (Number(amount.value) <= 0) {
     btnEl.removeAttribute('disabled');
 
     return;
