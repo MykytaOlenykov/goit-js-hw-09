@@ -11,6 +11,14 @@ formRef.addEventListener('submit', e => {
     elements: { delay, step, amount },
   } = e.currentTarget;
 
+  formValidation(Number(delay.value), Number(step.value), Number(amount.value));
+
+  if (!Number(amount.value)) {
+    btnEl.removeAttribute('disabled');
+
+    return;
+  }
+
   let currentDelay = Number(delay.value);
 
   for (let i = 1; i <= amount.value; i += 1) {
@@ -26,6 +34,16 @@ formRef.addEventListener('submit', e => {
     currentDelay += Number(step.value);
   }
 });
+
+function formValidation(delay, step, amount) {
+  if (delay < 0 || step < 0 || amount < 0) {
+    Notify.failure('Negative numbers are invalid.');
+  }
+
+  if (!amount) {
+    Notify.failure('Create at least one promise.');
+  }
+}
 
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
