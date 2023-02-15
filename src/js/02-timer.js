@@ -6,6 +6,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
+import '../css/timer-styles.css';
 
 const options = {
   enableTime: true,
