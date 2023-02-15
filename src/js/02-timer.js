@@ -39,13 +39,13 @@ disabledBtn();
 
 function onStartTimer() {
   disabledBtn();
-  onToggelTextInputActivity();
+  toggelTextInputActivity();
 
-  const deltaTime = deltaTimeCalculation();
+  const deltaTime = calculationDeltaTime();
 
   if (deltaTime <= 0) {
     Notify.failure('The date you chose has already arrived.');
-    onToggelTextInputActivity();
+    toggelTextInputActivity();
 
     return;
   }
@@ -55,11 +55,11 @@ function onStartTimer() {
   updateClockface(timeComponents);
 
   intervalId = setInterval(() => {
-    const deltaTime = deltaTimeCalculation();
+    const deltaTime = calculationDeltaTime();
 
     if (deltaTime <= 0) {
       Notify.success('The timer has finished its work.');
-      onToggelTextInputActivity();
+      toggelTextInputActivity();
       clearInterval(intervalId);
 
       return;
@@ -90,11 +90,11 @@ function disabledBtn() {
   refs.btnStart.setAttribute('disabled', '');
 }
 
-function onToggelTextInputActivity() {
+function toggelTextInputActivity() {
   textInputRef.toggleAttribute('disabled');
 }
 
-function deltaTimeCalculation() {
+function calculationDeltaTime() {
   return flatpickrEl.selectedDates[0].getTime() - Date.now();
 }
 
